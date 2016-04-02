@@ -2,13 +2,24 @@
   var app = angular.module("tasks", []);
 
   app.controller("TaskController", function(){
+    
+
     this.tasks = tasks;
+    this.new = {};
     // todo: get from browser cache / cookies
 
-    this.add = function(task) {
-      this.tasks.push(task);
+    this.add = function() {
+      this.new.date_of_creation = new Date();
+      this.tasks.push(this.new);
+      this.new = {};
     }
-    this.delete = function(task) {
+
+
+    this.edit = function() {
+      // body...
+    }
+
+    this.delete = function() {
 
     }
   });
@@ -27,8 +38,8 @@
   },
   {
     title: "zu move:elevator-Vorstellungsgespräch gehen",
+    description:"siehe Titel",
     date_of_creation: "2016-04-02",
-    maturity: "2016-03-31"
   }
   ];
 })();
