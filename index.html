@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "//www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html ng-app="tasks">
+<head>
+  <meta charset="utf-8">
+  
+  <link rel="stylesheet" type="text/css" href="assets/bootstrap.min.css">
+  <!-- <script type="text/javascript" src="assets/jquery-2.1.4.min.js"></script> -->
+  <script type="text/javascript" src="assets/angular.min.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+  <title>Todo-App - Testaufgabe move:elevator</title>
+</head>
+<body ng-controller="TaskController as tc" class="container">
+
+  <header>
+    <h1 class="text-center">Todo-App</h1>
+  </header>
+
+  <button class=btn btn-link>Neue Aufgabe</button>
+  <div class="new-task-container hidden">
+    <form>
+      <input type="submit" value="Aufgabe erstellen" />
+    </form>
+  </div>
+
+  <div class="list-group-item" ng-repeat="task in tc.tasks">
+    <p>Aufgabe vom {{task.date_of_creation | date: 'dd.MM. yyyy' }}</p>
+    <h3>{{task.title}}</h3>
+    <p>{{task.description}}</p>
+    <p>Fällig bis zum {{task.maturity | date: 'dd.MM. yyyy' }}</p>
+
+    <button class="btn btn-link">bearbeiten</button>
+    <button class="btn btn-link">löschen</button>
+  </div>
+
+
+  <footer>
+    Benjamin Schäfer, 2016 
+  </footer>
+</body>
+</html>
