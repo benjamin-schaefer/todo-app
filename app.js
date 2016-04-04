@@ -44,8 +44,12 @@
       this.resetNewForm();
     }
 
-    this.edit = function(id) {
-      // body...
+    this.update = function(task) {
+      this.edit.date_of_creation = task.date_of_creation;
+      this.edit.id = task.id;
+
+      taskCache.put('/tasks/' + task.id, this.edit);
+      this.tasks = taskCache.values();
       this.resetEditForm();
     }
 
