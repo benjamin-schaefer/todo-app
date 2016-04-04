@@ -13,26 +13,33 @@
     }
     taskCache = CacheFactory.get('taskCache');
 
-    if(taskCache.values().length === 0) {
-      createDefaultValues();
-    }
+    // if(taskCache.values().length === 0) {
+    //   createDefaultValues();
+    // }
 
     this.tasks = taskCache.values();
-    this.new = {};        // dummy for new object
+
+    this.resetNewForm = function() {
+      this.new = {};
+    }
+    this.resetNewForm();        // dummy for new object
 
     this.add = function() {
       this.new.date_of_creation = new Date();
+      this.new.id = this.tasks.length;
       this.tasks.push(this.new);
-      taskCache.put('/tasks/'+taskCache.values().length, this.new)
-      this.new = {};
+      taskCache.put('/tasks/'+this.new.id, this.new);
+      this.resetNewForm();
     }
 
     this.edit = function() {
       // body...
     }
 
-    this.delete = function() {
-
+    this.delete = function(id) {
+      console.log("id: " + id);
+      this.tasks.splice(id, 1);
+      taskCache.remove('/tasks/' + id);
     }
   });
 
@@ -40,25 +47,28 @@
     title: "Müll rausbringen",
     description: "Bring den Müll raus!",
     date_of_creation: "2016-04-02",
-    maturity: "2016-04-02"
+    maturity: "2016-04-02",
+    id: 0
   }, 
   {
     title: "Küche saubermachen",
     description: "Oberflächen abwischen, abwaschen, Boden kehren und wischen",
     date_of_creation: "2016-04-02",
-    maturity: "2016-04-03"
+    maturity: "2016-04-03",
+    id: 1
   },
   {
     title: "zu move:elevator-Vorstellungsgespräch gehen",
     description:"siehe Titel",
     date_of_creation: "2016-04-02",
+    id: 2
   }
   ];
 
   var createDefaultValues = function() {
     console.log("createDefaultValues");
     tasks.forEach(function(task, index, array){
-      taskCache.put('/tasks/'+index, task);
+      taskCache.put('/tasks/' + index, task);
     });
   }
       

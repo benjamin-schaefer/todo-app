@@ -41,7 +41,7 @@
       </div>
       
       <input type="submit" class="btn btn-success" value="Aufgabe erstellen" />
-      <button class="btn btn-danger" data-target=".new-task-container" data-toggle="collapse">Abbrechen</button>
+      <button class="btn btn-danger" data-target=".new-task-container" data-toggle="collapse" ng-click="tc.resetNewForm()">Abbrechen</button>
     </form>
   </div>
 
@@ -50,9 +50,8 @@
     <h3>{{task.title}}</h3>
     <p ng-show="task.description"><b>{{task.description}}</b></p>
     <p ng-show="task.maturity">Fällig bis zum {{task.maturity | date: 'dd.MM. yyyy' }}</p>
-
     <button class="btn btn-link">bearbeiten</button>
-    <button class="btn btn-link" ng>löschen</button>
+    <button class="btn btn-link" ng-click="tc.delete(task.id)">löschen</button>
   </div>
 
   <footer>
