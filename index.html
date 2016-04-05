@@ -4,9 +4,10 @@
   <meta charset="utf-8">
   
   <link rel="stylesheet" type="text/css" href="assets/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="style.css">
+
   <script type="text/javascript" src="assets/jquery-2.1.4.min.js"></script>
-  <script type="text/javascript" src="assets/jquery.cookie.js"></script>
-    <script type="text/javascript" src="assets/bootstrap.min.js"></script> 
+  <script type="text/javascript" src="assets/bootstrap.min.js"></script> 
   <script src="node_modules/angular/angular.min.js"></script>
   <script src="node_modules/angular-cache/dist/angular-cache.min.js"></script>
   <script type="text/javascript" src="app.js"></script>
@@ -21,7 +22,7 @@
   <button class="btn btn-primary" ng-click="tc.showNewForm(!tc.newFormVisible)">Neue Aufgabe</button>
 
   <div class="new-task-container well" ng-show="tc.newFormVisible">
-    <form role="form" name="createTaskForm" ng-submit="createTaskForm.$valid && tc.add()">
+    <form role="form" name="createTaskForm" ng-submit="createTaskForm.$valid && tc.add()" novalidate>
       <div class="form-group">
         <label for="title">Titel*:</label>
         <input id="title" type="text" class="form-control" ng-model="tc.new.title" required></input>
@@ -49,7 +50,7 @@
     <p ng-show="task.maturity">Fällig bis zum {{task.maturity | date: 'dd.MM. yyyy' }}</p>
 
     <div class="edit-task-{{task.id}}-container well" ng-show=tc.editFormVisible>
-      <form role="form" name="editTaskForm" ng-submit="editTaskForm.$valid && tc.update(task)">
+      <form role="form" name="editTaskForm" ng-submit="editTaskForm.$valid && tc.update(task)" novalidate>
 
         <div class="form-group">
           <label for="title-{{task.id}}">Titel*:</label>
