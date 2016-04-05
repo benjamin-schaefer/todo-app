@@ -18,12 +18,10 @@
     <h1 class="text-center">Todo-App</h1>
   </header>
 
-  <button class="btn btn-primary" 
-  data-target=".new-task-container" 
-  data-toggle="collapse">Neue Aufgabe</button>
+  <button class="btn btn-primary" ng-click="tc.showNewForm(!tc.newFormVisible)">Neue Aufgabe</button>
 
-  <div class="new-task-container well collapse">
-    <form role="form" name="createTaskForm" ng-submit="createTaskForm.$valid && tc.add() && $(this).parent.removeClass('in')">
+  <div class="new-task-container well" ng-show="tc.newFormVisible">
+    <form role="form" name="createTaskForm" ng-submit="createTaskForm.$valid && tc.add()">
       <div class="form-group">
         <label for="title">Titel*:</label>
         <input id="title" type="text" class="form-control" ng-model="tc.new.title" required></input>
@@ -40,7 +38,7 @@
       </div>
       
       <input type="submit" class="btn btn-success" value="Aufgabe erstellen" />
-      <button class="btn btn-danger" data-target=".new-task-container" data-toggle="collapse" ng-click="tc.resetNewForm()">Abbrechen</button>
+      <button class="btn btn-danger" ng-click="tc.resetNewForm()">Abbrechen</button>
     </form>
   </div>
 
@@ -50,8 +48,8 @@
     <p ng-show="task.description"><b>{{task.description}}</b></p>
     <p ng-show="task.maturity">Fällig bis zum {{task.maturity | date: 'dd.MM. yyyy' }}</p>
 
-    <div class="edit-task-{{task.id}}-container well collapse">
-      <form role="form" name="editTaskForm" ng-submit="editTaskForm.$valid && tc.update(task) && $(this).parent.removeClass('in')">
+    <div class="edit-task-{{task.id}}-container well" ng-show=tc.editFormVisible>
+      <form role="form" name="editTaskForm" ng-submit="editTaskForm.$valid && tc.update(task)">
 
         <div class="form-group">
           <label for="title-{{task.id}}">Titel*:</label>
@@ -69,11 +67,11 @@
         </div>
         
         <input type="submit" class="btn btn-success" value="Änderungen speichern" />
-        <button class="btn btn-danger" data-target=".edit-task-{{task.id}}-container" data-toggle="collapse" class="form-control" ng-click="tc.resetEditForm()">Abbrechen</button>
+        <button class="btn btn-danger"class="form-control" ng-click="tc.resetEditForm()">Abbrechen</button>
       </form>
     </div>
 
-    <button class="btn btn-link" data-target=".edit-task-{{task.id}}-container" data-toggle="collapse">bearbeiten</button>
+    <button class="btn btn-link" ng-click="tc.showEditForm(!tc.editFormVisible)">bearbeiten</button>
     <button class="btn btn-link" ng-click="tc.delete(task.id)">löschen</button>
   </div>
 

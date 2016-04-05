@@ -33,14 +33,22 @@
     }
     this.newIndex = this.getMaxIndex();
 
+    this.showNewForm = function(visible) {
+      this.newFormVisible = visible;
+    };
     this.resetNewForm = function() {
       this.new = {};
-      this.new.maturity = new Date()
+      this.new.maturity = new Date() //set initial maturity date to today
+      this.showNewForm(false);
+    };
+
+    this.showEditForm = function(visible) {
+      this.editFormVisible = visible;
     }
     this.resetEditForm = function() {
       this.edit = {};
-      this.edit.maturity = new Date()
-    }
+      this.showEditForm(false);
+    };
     this.resetNewForm();
     this.resetEditForm();
 
@@ -50,17 +58,17 @@
       this.tasks.push(this.new);
       taskCache.put('/tasks/' + this.new.id, this.new);
       this.resetNewForm();
-    }
+    };
 
     this.update = function(task) {
       taskCache.put('/tasks/' + task.id, task);
       this.resetEditForm();
-    }
+    };
 
     this.delete = function(id) {
       taskCache.remove('/tasks/' + id);
       this.tasks = taskCache.values();
-    }
+    };
   });
       
 })();
