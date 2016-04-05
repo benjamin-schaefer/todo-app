@@ -1,0 +1,24 @@
+{
+  "name": "todo-app",
+  "version": "1.0.0",
+  "description": "to-do app for creating, editing and deleting tasks",
+  "main": "app.js",
+  "dependencies": {
+    "angular": "^1.5.3",
+    "angular-cache": "^4.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benjamin-schaefer/todo-app.git"
+  },
+  "author": "Benjamin Schäfer (benjaminschaefer@mail.de)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benjamin-schaefer/todo-app/issues"
+  },
+  "homepage": "https://github.com/benjamin-schaefer/todo-app#readme"
+}
