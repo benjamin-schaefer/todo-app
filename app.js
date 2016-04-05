@@ -1,7 +1,17 @@
-
-
 (function(){
   var app = angular.module("tasks", ["angular-cache"]);
+
+  // taken from http://stackoverflow.com/questions/26782917/model-is-not-a-date-object-on-input-in-angularjs
+  app.directive("formatDate", function(){
+    return {
+     require: 'ngModel',
+      link: function(scope, elem, attr, modelCtrl) {
+        modelCtrl.$formatters.push(function(modelValue){
+          return new Date(modelValue);
+        })
+      }
+    }
+  });
 
   app.controller("TaskController", function(CacheFactory){
 
@@ -12,11 +22,6 @@
       });
     }
     var taskCache = CacheFactory.get('taskCache');
-
-    // if(taskCache.values().length === 0) {
-    //   createDefaultValues();
-    // }
-
     this.tasks = taskCache.values();
 
     this.getMaxIndex = function(){
@@ -30,9 +35,11 @@
 
     this.resetNewForm = function() {
       this.new = {};
+      this.new.maturity = new Date()
     }
     this.resetEditForm = function() {
       this.edit = {};
+      this.edit.maturity = new Date()
     }
     this.resetNewForm();
     this.resetEditForm();
@@ -45,8 +52,8 @@
       this.resetNewForm();
     }
 
-    this.edit = function(id) {
-      // body...
+    this.update = function(task) {
+      taskCache.put('/tasks/' + task.id, task);
       this.resetEditForm();
     }
 
