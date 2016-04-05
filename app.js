@@ -3,20 +3,30 @@
 (function(){
   var app = angular.module("tasks", ["angular-cache"]);
 
+  // taken from http://stackoverflow.com/questions/26782917/model-is-not-a-date-object-on-input-in-angularjs
+  app.directive("formatDate", function(){
+  return {
+   require: 'ngModel',
+    link: function(scope, elem, attr, modelCtrl) {
+      modelCtrl.$formatters.push(function(modelValue){
+        return new Date(modelValue);
+      })
+    }
+  }
+})
+
   app.controller("TaskController", function(CacheFactory){
 
-    if (!CacheFactory.get('taskCache')) {
-      CacheFactory.createCache('taskCache', {
-        deleteOnExpire: 'none',
-        storageMode: 'localStorage'
-      });
-    }
-    var taskCache = CacheFactory.get('taskCache');
-
-    // if(taskCache.values().length === 0) {
-    //   createDefaultValues();
-    // }
-    this.tasks = taskCache.values();
+    this.initCache = function() {
+      if (!CacheFactory.get('taskCache')) {
+        CacheFactory.createCache('taskCache', {
+          deleteOnExpire: 'none',
+          storageMode: 'localStorage'
+        });
+      }
+      var taskCache = CacheFactory.get('taskCache');
+      this.tasks = taskCache.values();
+    };
 
     this.getMaxIndex = function(){
       var maxIndex = 0;
@@ -29,9 +39,11 @@
 
     this.resetNewForm = function() {
       this.new = {};
+      this.new.maturity = new Date()
     }
     this.resetEditForm = function() {
       this.edit = {};
+      this.edit.maturity = new Date()
     }
     this.resetNewForm();
     this.resetEditForm();
@@ -45,11 +57,7 @@
     }
 
     this.update = function(task) {
-      this.edit.date_of_creation = task.date_of_creation;
-      this.edit.id = task.id;
-
-      taskCache.put('/tasks/' + task.id, this.edit);
-      this.tasks = taskCache.values();
+      taskCache.put('/tasks/' + task.id, task);
       this.resetEditForm();
     }
 
@@ -60,3 +68,5 @@
   });
       
 })();
+
+// TODO: 
